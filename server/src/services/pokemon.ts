@@ -1,3 +1,4 @@
+import { savePokemon } from "./db.ts"
 export type Pokemon = {
   id: number
   name: string
@@ -11,7 +12,7 @@ const pokemonList: Pokemon[] = [
   { id: 6, name: 'Charizard' },
   { id: 7, name: 'Squirtle' },
   { id: 8, name: 'Wartortle' },
-  { id: 9, name: 'Blastoise' },
+  { id: 9, name: 'Bla2stoise' },
 ]
 
 export const getPokemonList = async (page?: number): Promise<{ list: Pokemon[], count: number}> => {
@@ -19,18 +20,26 @@ export const getPokemonList = async (page?: number): Promise<{ list: Pokemon[], 
   return { list: pokemonList.slice((page - 1) * 5, page * 5), count: pokemonList.length }
 }
 
-export const addPokemon = async (pokemon: Pokemon) => {
+/*export const addPokemon = async (pokemon: Pokemon) => {
   if (pokemonList.some((p) => p.id === pokemon.id)) {
     throw new Error('Pokemon already exists')
   }
   pokemonList.push(pokemon)
   return pokemon
-}
+}*/
 
+
+export const addPokemon = async (pokemon: Pokemon) => {
+  if (pokemonList.some((p) => p.id === pokemon.id)) {
+    throw new Error('Pokemon already exists')
+  }
+  //pokemonList.push(pokemon)
+  const newPokemonDoc = await savePokemon(pokemon)
+  console.log('Saved Pokemon: ', newPokemonDoc)
+  return pokemon
+}
 export const deletePokemon = async (pokemonId: number) => {
   const index = pokemonList.findIndex((pokemon) => pokemon.id === pokemonId)
-  if (index === -1) {
-    throw new Error('Pokemon not found')
-  }
+ 
   return pokemonList.splice(index, 1)[0]
 }
