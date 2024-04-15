@@ -1,4 +1,4 @@
-import { savePokemon } from "./db.ts"
+import { savePokemon  } from "./db.ts"
 export type Pokemon = {
   id: number
   name: string
@@ -33,7 +33,7 @@ export const addPokemon = async (pokemon: Pokemon) => {
   if (pokemonList.some((p) => p.id === pokemon.id)) {
     throw new Error('Pokemon already exists')
   }
-  //pokemonList.push(pokemon)
+  pokemonList.push()
   const newPokemonDoc = await savePokemon(pokemon)
   console.log('Saved Pokemon: ', newPokemonDoc)
   return pokemon

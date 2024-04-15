@@ -1,5 +1,6 @@
 import { createSignal, createEffect } from "solid-js";
 
+
 type Pokemon = {
   id: number;
   name: string;
@@ -12,9 +13,10 @@ export default function App() {
   const [page, setPage] = createSignal(1);
   const [count, setCount] = createSignal(0);
   const pageSize = 5;
-
+  
   createEffect(() => {
     let canceled = false;
+    
     fetch(`${BASE_URL}/pokemon.json?page=${page()}&pageSize=${pageSize}`)
       .then((res) => res.json())
       .then((data) => {
@@ -26,7 +28,8 @@ export default function App() {
     return () => {
       canceled = true;
     };
-  }, [page]);
+  },
+   [page]);
 
   async function addPokemon(event: Event) {
     event.preventDefault();
@@ -66,7 +69,8 @@ export default function App() {
       setPage(page() - 1);
     }
   }
-
+  
+  
   return (
     <main class="container mx-auto flex flex-col">
       <h1 class="text-5xl text-red-600 font-extrabold text-center">Pokedex</h1>
@@ -99,4 +103,5 @@ export default function App() {
       </div>
     </main>
   );
+  
 }
