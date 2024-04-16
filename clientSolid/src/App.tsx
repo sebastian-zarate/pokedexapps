@@ -1,6 +1,5 @@
 import { createSignal, createEffect } from "solid-js";
 
-
 type Pokemon = {
   id: number;
   name: string;
